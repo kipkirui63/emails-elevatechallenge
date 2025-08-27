@@ -1,0 +1,13 @@
+# Environment files
+.env
+*.env
+
+# Output and runtime
+node_modules/
+dist/
+*.log
+
+# Replit/Agent/local state
+.local/
+replit.*
+**/.DS_Store
