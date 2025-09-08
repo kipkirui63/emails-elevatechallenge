@@ -1,0 +1,63 @@
+// scripts/schedule-email.ts
+import "dotenv/config";
+import { storage } from "../server/storage";
+
+async function main() {
+  const subject =
+    "⏳ Imagine Compressing Months of Work Into Days… In Just 5 Days You’ll See How";
+
+  const html = `
+<p>Hi {{name}},</p>
+
+<p>Imagine this for a second…<br>
+You’ve got a big project that normally takes months of research and back-and-forth. Instead of slogging through it, you have an AI tool that does the heavy lifting, compressing months of effort into just a few days (sometimes hours).</p>
+
+<p>This is exactly what we’ll start building together inside the AI Elevate Challenge, kicking off in just 5 days! 🚀</p>
+
+<h3>Here’s what to do right now so you don’t miss it:</h3>
+<ul>
+  <li>✅ <strong>Save the Dates</strong><br/>
+      🗓 September 13–14, 2025<br/>
+      🕒 1–4 PM ET Daily<br/>
+      📍 Live on Zoom (with replays)<br/>
+      👉 <a href="https://us06web.zoom.us/j/89419812734?pwd=N65aL23ZSrXT7GOZt4cYhCSM2ajQAj.1">Add to Calendar</a>
+  </li>
+  <li>✅ <strong>Join the WhatsApp Community</strong><br/>
+      Stay plugged in for reminders, bonus drops, and support.<br/>
+      👉 <a href="https://chat.whatsapp.com/IX9zZ5uuaLy1tvHoNRTwJh?mode=ems_copy_t">Join the Community</a>
+  </li>
+  <li>✅ <strong>Share with a friend</strong><br/>
+      👉 <a href="https://aielevatechallenge.crispai.ca">Share the registration link</a>
+  </li>
+</ul>
+
+<p>This is your time to lead with AI.<br/>
+See you in 5 days,<br/>
+<strong>The Crisp AI Team</strong></p>
+
+<hr/>
+<p><strong>Quick links</strong><br/>
+Zoom (add to calendar): <a href="https://us06web.zoom.us/j/89419812734?pwd=N65aL23ZSrXT7GOZt4cYhCSM2ajQAj.1">Join / Add</a><br/>
+WhatsApp community: <a href="https://chat.whatsapp.com/IX9zZ5uuaLy1tvHoNRTwJh?mode=ems_copy_t">Join here</a><br/>
+Registration: <a href="https://aielevatechallenge.crispai.ca">aielevatechallenge.crispai.ca</a></p>
+`.trim();
+
+  // 18:45 Africa/Nairobi (UTC+3) => 15:45:00Z
+  const scheduledAt = new Date("2025-09-08T18:12:00.000Z");
+
+  const row = await storage.createEmailSchedule({
+    registrationId: null,   // null => send to ALL registrations
+    emailType: "custom",
+    subject,
+    html,
+    scheduledAt,
+    status: "pending",
+  } as any);
+
+  console.log("Created schedule:", row);
+}
+
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

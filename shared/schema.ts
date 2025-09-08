@@ -23,7 +23,9 @@ export const registrations = pgTable("registrations", {
 export const emailSchedules = pgTable("email_schedules", {
   id: serial("id").primaryKey(),
   registrationId: integer("registration_id").references(() => registrations.id),
-  emailType: text("email_type").notNull(), // "7-days", "3-days", "2-days", "1-day", "10-minutes", "live"
+  emailType: text("email_type").notNull(), // "7-days", "3-days", "2-days", "1-day", "10-minutes", "live", "custom"
+  subject: text("subject"),
+  html: text("html"),
   scheduledAt: timestamp("scheduled_at").notNull(),
   sentAt: timestamp("sent_at"),
   status: text("status").notNull().default("pending"), // "pending", "sent", "failed"
@@ -51,6 +53,8 @@ export const insertRegistrationSchema = createInsertSchema(registrations).pick({
 export const insertEmailScheduleSchema = createInsertSchema(emailSchedules).pick({
   registrationId: true,
   emailType: true,
+  subject: true,
+  html: true,
   scheduledAt: true,
   status: true,
 });
