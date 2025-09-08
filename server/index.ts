@@ -1,6 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { emailScheduler } from "./scheduler";
 import dotenv from "dotenv";
 
 // Load environment variables
@@ -41,6 +42,10 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Start the email scheduler
+  console.log("🔧 Starting email scheduler...");
+  emailScheduler.start();
+  
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {

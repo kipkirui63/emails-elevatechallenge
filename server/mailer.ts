@@ -28,7 +28,7 @@ console.log("SMTP Configuration:", {
 });
 
 // Create a single transporter instance for the application
-export const transporter = nodemailer.createTransporter(smtpConfig);
+export const transporter = nodemailer.createTransport(smtpConfig);
 
 // Test email connection with better error handling
 export const testConnection = async () => {
