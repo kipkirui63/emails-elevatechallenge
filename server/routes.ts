@@ -153,6 +153,51 @@ async function sendFreeConfirmationEmail(registration: any) {
   }
 }
 
+// Create email schedules for reminder emails leading up to the event
+async function createEmailSchedules(registrationId: number) {
+  // Event date: September 13, 2025 at 1:00 PM EST
+  const eventDate = new Date('2025-09-13T13:00:00-05:00'); // EST timezone
+  
+  const schedules = [
+    { type: '7-days', days: 7 },
+    { type: '3-days', days: 3 },
+    { type: '2-days', days: 2 },
+    { type: '1-day', days: 1 },
+    { type: '10-minutes', days: 0, minutes: -10 }, // 10 minutes before
+    { type: 'live', days: 0 }, // At event time
+  ];
+
+  try {
+    for (const schedule of schedules) {
+      const scheduledAt = new Date(eventDate);
+      
+      if (schedule.days > 0) {
+        // Subtract days and set to 9 AM EST for reminder emails
+        scheduledAt.setDate(scheduledAt.getDate() - schedule.days);
+        scheduledAt.setHours(9, 0, 0, 0);
+      } else if (schedule.minutes) {
+        // Add minutes (negative for "before")
+        scheduledAt.setMinutes(scheduledAt.getMinutes() + schedule.minutes);
+      }
+      // For 'live' type, keep the event time
+      
+      // Only schedule emails for future dates
+      if (scheduledAt > new Date()) {
+        await storage.createEmailSchedule({
+          registrationId,
+          emailType: schedule.type,
+          scheduledAt,
+          status: 'pending'
+        });
+        console.log(`Created ${schedule.type} email schedule for ${scheduledAt}`);
+      }
+    }
+  } catch (error) {
+    console.error('Error creating email schedules:', error);
+    // Don't throw - registration should succeed even if scheduling fails
+  }
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Registration endpoint
   app.post("/api/register", async (req, res) => {
@@ -178,6 +223,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log("Creating registration in database...");
       const registration = await storage.createRegistration(validatedData);
       console.log("Registration created:", JSON.stringify(registration, null, 2));
+
+      // Create email schedules for reminder emails
+      console.log("Creating email schedules...");
+      await createEmailSchedules(registration.id);
 
       // Send emails sequentially with better error handling
       console.log("Sending emails...");
