@@ -4,7 +4,7 @@ import { storage } from "./storage";
 import { insertRegistrationSchema } from "@shared/schema";
 import { z } from "zod";
 import { sendRegistrationEmail, sendFreeConfirmationEmail } from "./mailer";
-import { createEmailSchedules, processScheduledEmails } from "./schedule-email";
+// Email processing is handled by the scheduler
 import { emailScheduler } from "./scheduler";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -33,9 +33,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const registration = await storage.createRegistration(validatedData);
       console.log("Registration created:", JSON.stringify(registration, null, 2));
 
-      // Create email schedules for reminder emails
-      console.log("Creating email schedules...");
-      await createEmailSchedules(registration.id);
+      // Email schedules are handled separately via schedule-email.ts script
 
       // Send emails sequentially with better error handling
       console.log("Sending emails...");
@@ -103,7 +101,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Background job endpoint to process pending email schedules
   app.post("/api/emails/process-scheduled", async (req, res) => {
     try {
-      const result = await processScheduledEmails();
+      const result = await emailScheduler.runNow();
       res.json(result);
     } catch (error) {
       console.error("Email processing error:", error);

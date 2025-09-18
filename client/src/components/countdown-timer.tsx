@@ -13,7 +13,7 @@ export default function CountdownTimer({ compact = false }: CountdownTimerProps)
   });
 
   useEffect(() => {
-    const targetDate = new Date('2025-09-13T17:00:00Z').getTime(); // 1 PM EST (5 PM UTC)
+    const targetDate = new Date('2025-09-27T17:00:00Z').getTime(); // 1 PM EST (5 PM UTC)
 
     const updateCountdown = () => {
       const now = new Date().getTime();

@@ -1,5 +1,89 @@
 import * as cron from "node-cron";
-import { processScheduledEmails } from "./schedule-email";
+import { transporter } from "./mailer";
+import { storage } from "./storage";
+import { type Registration } from "@shared/schema";
+
+// Process pending scheduled emails
+async function processScheduledEmails() {
+  try {
+    console.log("=== PROCESSING SCHEDULED EMAILS ===");
+    
+    // Get pending email schedules that are due to be sent
+    const pendingSchedules = await storage.getPendingEmailSchedules();
+    const now = new Date();
+    const dueSchedules = pendingSchedules.filter(schedule => 
+      new Date(schedule.scheduledAt) <= now
+    );
+
+    console.log(`Found ${dueSchedules.length} emails due to be sent`);
+
+    let sent = 0;
+    let failed = 0;
+
+    for (const schedule of dueSchedules) {
+      try {
+        if (schedule.registrationId === null) {
+          // Send to ALL registrations
+          const allRegistrations = await storage.getAllRegistrations();
+          
+          for (const registration of allRegistrations) {
+            try {
+              await sendEmailWithTemplate(schedule, registration);
+              console.log(`Sent ${schedule.emailType} email to ${registration.email}`);
+            } catch (error) {
+              console.error(`Failed to send ${schedule.emailType} to ${registration.email}:`, error);
+              failed++;
+              continue;
+            }
+          }
+          sent += allRegistrations.length;
+        } else {
+          // Send to specific registration
+          const registration = await storage.getRegistrationById(schedule.registrationId);
+          if (!registration) {
+            console.error(`Registration not found for schedule ${schedule.id}`);
+            failed++;
+            continue;
+          }
+          
+          await sendEmailWithTemplate(schedule, registration);
+          sent++;
+          console.log(`Sent ${schedule.emailType} email to ${registration.email}`);
+        }
+        
+        // Update schedule as sent
+        await storage.updateEmailScheduleStatus(schedule.id, 'sent', now);
+        
+      } catch (error) {
+        console.error(`Failed to send ${schedule.emailType} email:`, error);
+        await storage.updateEmailScheduleStatus(schedule.id, 'failed', now);
+        failed++;
+      }
+    }
+
+    console.log(`=== EMAIL PROCESSING COMPLETE: ${sent} sent, ${failed} failed ===`);
+    return { processed: dueSchedules.length, sent, failed };
+  } catch (error) {
+    console.error("Email processing error:", error);
+    throw error;
+  }
+}
+
+// Send email using the stored HTML template
+async function sendEmailWithTemplate(schedule: any, registration: Registration) {
+  let html = schedule.html || '';
+  
+  // Replace template variables
+  html = html.replace(/\{\{name\}\}/g, registration.name);
+  html = html.replace(/\{\{email\}\}/g, registration.email);
+  
+  await transporter.sendMail({
+    from: process.env.ADMIN_EMAIL || "info@crispai.ca",
+    to: registration.email,
+    subject: schedule.subject,
+    html: html.trim(),
+  });
+}
 
 export class EmailScheduler {
   private static instance: EmailScheduler;
@@ -26,7 +110,7 @@ export class EmailScheduler {
 
     // Run every 5 minutes: "*/5 * * * *"
     // For testing, you can use "* * * * *" to run every minute
-    this.cronJob = cron.schedule("*/5 * * * *", async () => {
+    this.cronJob = cron.schedule("*/15 * * * *", async () => {
       try {
         console.log(`[${new Date().toISOString()}] Running scheduled email processor...`);
         const result = await processScheduledEmails();

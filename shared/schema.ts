@@ -28,7 +28,7 @@ export const emailSchedules = pgTable("email_schedules", {
   html: text("html"),
   scheduledAt: timestamp("scheduled_at").notNull(),
   sentAt: timestamp("sent_at"),
-  status: text("status").notNull().default("pending"), // "pending", "sent", "failed"
+  status: text("status").notNull().default("pending"), // "pending", "processing", "sent", "failed"
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({

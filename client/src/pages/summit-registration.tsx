@@ -98,7 +98,7 @@ export default function SummitRegistration() {
               {/* Main Heading */}
               <div className="text-center mb-12">
                 <h1 className="text-2xl lg:text-4xl font-bold text-gray-900 mb-6 leading-tight px-4">
-                  Join This Free 2-Day Event with AI Expert Dr Uche Udoha | Sep 13 – Sep 14 | 1-4pm EST Daily
+                  Join This Free 2-Day Event with AI Expert Dr Uche Udoha | Sep 27 – Sep 28 | 1-4pm EST Daily
                 </h1>
                 <h2 className="text-xl lg:text-3xl font-bold mb-6 leading-tight">
                   <span style={{background: 'linear-gradient(135deg, #17abe8, #004aad)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text'}}>AI Elevate Challenge:</span> Become the Person Who Uses AI Right
@@ -119,7 +119,7 @@ export default function SummitRegistration() {
                 </div>
 
                 <div className="text-center p-8 rounded-xl bg-white shadow-md mb-12">
-                  <div className="text-2xl font-bold mb-2">Sep 13- Sep 14</div>
+                  <div className="text-2xl font-bold mb-2">Sep 27 - Sep 28</div>
                   <div className="text-md text-gray-700 mb-4">Join from anywhere in the world via zoom</div>
 
                   <div className="flex flex-wrap justify-center gap-3">
@@ -361,7 +361,7 @@ export default function SummitRegistration() {
         <div className="bg-white py-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">
-              Join the challenge for free and get live access to all classes from the 13th to the 14th of September.
+              Join the challenge for free and get live access to all classes from the 27th to the 28th of September.
             </h2>
             <Button
               onClick={() => {
@@ -415,34 +415,64 @@ export default function SummitRegistration() {
           </div>
         </div>
 
-        {/* Testimonials Section */}
+       {/* Testimonials Section */}
         <div className="bg-gray-50 py-16">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-4xl font-bold text-gray-900 text-center mb-12">
               What People Are Saying About The AI Elevate Challenge
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <div className="bg-white p-6 rounded-xl shadow-sm">
                 <p className="text-gray-700 italic mb-4">
-                  "Hi Ucheoma, for 3 days you wowed me. I am very proud of you. As we speak, I am rewatching the presentation. I just started rewatching. Please don't stop. You make me proud. I mean very very proud."
+                  “Good evening ma’am. I’m honestly so amazed by everything I’ve
+                  experienced in this training. The opportunity to learn AI for free,
+                  combined with the endless resources you’ve shared, is truly
+                  remarkable. Thank you so much for dedicating your time and sharing
+                  your knowledge with us so generously. I really hope to stay in touch
+                  with you going forward.”
+                </p>
+                <p className="font-semibold text-gray-900">— Mary</p>
+              </div>
+
+              <div className="bg-white p-6 rounded-xl shadow-sm">
+                <p className="text-gray-700 italic mb-4">
+                  “Thank you so much for taking me from level zero to this new level of
+                  understanding. I truly appreciate how the sessions broke things down
+                  in a way I could follow, even as a beginner. This has been so
+                  valuable for me, and I would also love to have access to the
+                  recording so I can keep learning and revisiting the lessons.”
+                </p>
+                <p className="font-semibold text-gray-900">
+                  — Jibuike Uchechukwu
                 </p>
               </div>
 
               <div className="bg-white p-6 rounded-xl shadow-sm">
                 <p className="text-gray-700 italic mb-4">
-                  "It was marvelous, mind blowing, fantastic. I want to use manus. I have papers that need to be completed soon."
+                  “I really enjoyed the session from start to finish. It was engaging,
+                  practical, and easy to follow, and I learned so much along the way.
+                  Every part of it added value to my understanding of AI, and I’m
+                  grateful for the knowledge shared.”
                 </p>
+                <p className="font-semibold text-gray-900">— Tolulope Borokinni</p>
               </div>
 
               <div className="bg-white p-6 rounded-xl shadow-sm">
                 <p className="text-gray-700 italic mb-4">
-                  "Thank you for the insightful sessions in the just concluded challenge. It was indeed an eye opener and mind-blowing session"
+                  “The session was such an eye-opening experience. It gave me a fresh
+                  perspective and sparked a real hunger to learn even more about AI.
+                  What stood out most was how practical it felt, I could clearly see
+                  ways to apply the knowledge directly to everyday business situations.
+                  It has definitely motivated me to keep exploring and growing in this
+                  area.”
                 </p>
+                <p className="font-semibold text-gray-900">— Ihuoma Uguru</p>
               </div>
             </div>
           </div>
         </div>
+
 
         {/* FAQ Section */}
         <div className="bg-white py-16">
@@ -504,7 +534,7 @@ export default function SummitRegistration() {
                 AI Elevate Challenge 2025
               </h3>
               <p className="text-gray-400 mb-6">
-                Master AI with Dr. Uche Udoha • September 13-14, 2025 • Virtual Event
+                Master AI with Dr. Uche Udoha • September 27-28, 2025 • Virtual Event
               </p>
               <p className="text-gray-400 mb-6">
                 Questions? Email us at <a href="mailto:info@crispai.com" style={{color: '#17abe8'}} className="hover:opacity-80">info@crispai.com</a>

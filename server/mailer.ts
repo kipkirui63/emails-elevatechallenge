@@ -98,13 +98,13 @@ export async function sendFreeConfirmationEmail(registration: any) {
   </div>
   <div style="padding: 30px; background: white; border-radius: 0 0 8px 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
     <h2 style="color: #8B5CF6;">Hi ${registration.name},</h2>
-    <p>Welcome aboard! You're officially an attendee for the AI Elevate Challenge happening September 13th to 14th, and we couldn't be more excited to have you.</p>
+    <p>Welcome aboard! You're officially an attendee for the AI Elevate Challenge happening September 27th to 28th, and we couldn't be more excited to have you.</p>
     <p>This isn't just any challenge and you didn't just sign up. You made an intentional investment in your growth, and we're showing up for you every step of the way.</p>
 
     <div style="background: linear-gradient(135deg, #17abe8 0%, #004aad 100%); padding: 20px; border-radius: 8px; margin: 20px 0; color: white;">
       <h3 style="margin-top: 0; text-align: center;">📅 Event Details:</h3>
       <p style="text-align: center;">
-        <strong style="color: white;">🗓 Date: September 13th to 14th, 2025</strong>
+        <strong style="color: white;">🗓 Date: September 27th to 28th, 2025</strong>
       </p>
       <p style="text-align: center;">
         <strong style="color: white;">🕒 Time: 1:00 PM–4:00 PM EST</strong>

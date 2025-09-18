@@ -165,7 +165,7 @@ export default function RegistrationSuccess() {
         <div className="rounded-xl p-8 text-white text-center mb-12" style={{background: 'linear-gradient(135deg, #17abe8, #004aad)'}}>
           <h2 className="text-2xl font-bold mb-4">📅 Save the Dates</h2>
           <div className="space-y-2">
-            <p>🗓 <strong>September 13–14</strong></p>
+            <p>🗓 <strong>September 27–28</strong></p>
             <p>🕓 <strong>1PM–4 PM EST Daily</strong></p>
             <p>📍 <strong>Live on Zoom | Replay Access</strong></p>
           </div>
